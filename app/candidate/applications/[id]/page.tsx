@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -23,7 +25,13 @@ import {
   X,
 } from "lucide-react"
 
-export default function ApplicationDetailPage({ params }: { params: { id: number } }) {
+interface PageProps {
+  params: {
+    id: string;
+  };
+}
+
+export default function ApplicationDetailPage({ params }: PageProps) {
   // In a real app, you would fetch the application data based on the ID
   const application = {
     id: params.id,
