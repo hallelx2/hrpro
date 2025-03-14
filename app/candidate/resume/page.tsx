@@ -14,18 +14,20 @@ import { Textarea } from "@/components/ui/textarea"
 import { Separator } from "@/components/ui/separator"
 import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
-import { useToast } from "@/hooks/use-toast"
+import { toast } from "sonner"
 import { AlertCircle, ArrowUpRight, Download, FileUp, Loader2, Save, Sparkles, Upload, Zap } from "lucide-react"
 
 export default function CandidateResumePage() {
-  const { toast } = useToast()
   const [activeTab, setActiveTab] = useState("upload")
   const [isSaving, setIsSaving] = useState(false)
   const [resumeFile, setResumeFile] = useState<File | null>(null)
   const [analysisComplete, setAnalysisComplete] = useState(false)
   const [improvementMode, setImprovementMode] = useState(false)
   const [jobTitleForOpt, setJobTitleForOpt] = useState("")
-  const [optimizationResults, setOptimizationResults] = useState(null)
+  const [optimizationResults, setOptimizationResults] = useState<{
+    matchScore?: number;
+    improvements?: string[];
+  } | null>(null)
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -44,19 +46,12 @@ export default function CandidateResumePage() {
     setAnalysisComplete(true)
     setIsSaving(false)
 
-    toast({
-      title: "Resume analyzed successfully",
-      description: "We've parsed your resume and extracted your skills and experience.",
-    })
+    toast("Resume analyzed successfully")
   }
 
   const handleOptimizeResume = async () => {
     if (!jobTitleForOpt) {
-      toast({
-        title: "Please enter a job title",
-        description: "We need a job title to optimize your resume for.",
-        variant: "destructive",
-      })
+      toast("Please enter a job title")
       return
     }
 
@@ -68,10 +63,7 @@ export default function CandidateResumePage() {
     setOptimizationResults({})
     setIsSaving(false)
 
-    toast({
-      title: "Resume optimized!",
-      description: `Your resume has been optimized for ${jobTitleForOpt} positions.`,
-    })
+    toast("Resume optimized!")
   }
 
   const handleSaveChanges = async () => {
@@ -82,10 +74,7 @@ export default function CandidateResumePage() {
 
     setIsSaving(false)
 
-    toast({
-      title: "Changes saved!",
-      description: "Your resume has been updated successfully.",
-    })
+    toast("Changes saved")
   }
 
   return (
@@ -661,4 +650,3 @@ export default function CandidateResumePage() {
     </div>
   )
 }
-

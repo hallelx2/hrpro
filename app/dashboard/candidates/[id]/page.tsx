@@ -6,17 +6,11 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import {
-  Badge,
-  Progress,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  Textarea,
-  Separator,
-} from "@/components/ui/components"
+import { Badge } from "@/components/ui/badge"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Progress } from "@/components/ui/progress"
+import { Textarea } from "@/components/ui/textarea"
+import { Separator } from "@/components/ui/separator"
 import {
   Dialog,
   DialogContent,
@@ -45,12 +39,11 @@ import {
   UserPlus,
   Loader2,
 } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+import { toast } from "sonner"
 import { AIAnalysis } from "@/components/applications/ai-analysis"
 import { ResumeViewer } from "@/components/applications/resume-viewer"
 
 export default function CandidateDetailPage({ params }: { params: { id: string } }) {
-  const { toast } = useToast()
   const [status, setStatus] = useState("Shortlisted")
   const [isLoading, setIsLoading] = useState(false)
   const [isMessageOpen, setIsMessageOpen] = useState(false)
@@ -63,10 +56,7 @@ export default function CandidateDetailPage({ params }: { params: { id: string }
       setStatus(newStatus)
       setIsLoading(false)
 
-      toast({
-        title: "Status updated",
-        description: `Candidate status changed to ${newStatus}`,
-      })
+      toast("Status updated")
     }, 1000)
   }
 
@@ -79,10 +69,7 @@ export default function CandidateDetailPage({ params }: { params: { id: string }
     setIsLoading(false)
     setIsMessageOpen(false)
 
-    toast({
-      title: "Message sent",
-      description: "Your message has been sent to the candidate.",
-    })
+    toast("Message sent")
   }
 
   // Mock candidate data - in a real app, this would come from an API
@@ -746,4 +733,3 @@ export default function CandidateDetailPage({ params }: { params: { id: string }
     </div>
   )
 }
-

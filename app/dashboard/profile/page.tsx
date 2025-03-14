@@ -14,7 +14,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
 import { Save, Upload, Shield, Mail, Lock, Trash2, AlertCircle } from "lucide-react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useToast } from "@/hooks/use-toast"
+import { toast } from "sonner"
 import {
   Dialog,
   DialogContent,
@@ -25,7 +25,6 @@ import {
 } from "@/components/ui/dialog"
 
 export default function ProfilePage() {
-  const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
   const [avatarUrl, setAvatarUrl] = useState("/placeholder.svg?height=128&width=128")
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
@@ -46,10 +45,7 @@ export default function ProfilePage() {
 
     setIsLoading(false)
 
-    toast({
-      title: "Profile updated",
-      description: "Your profile information has been updated successfully.",
-    })
+    toast("Profile updated successfully")
   }
 
   return (
@@ -663,4 +659,3 @@ export default function ProfilePage() {
     </div>
   )
 }
-

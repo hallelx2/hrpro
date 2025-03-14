@@ -14,14 +14,13 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Switch } from "@/components/ui/switch"
 import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { useToast } from "@/hooks/use-toast"
+import { toast } from "sonner"
 import { ArrowLeft, CalendarIcon, Check } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { cn } from "@/lib/utils"
 import { format } from "date-fns"
 
 export default function ScheduleInterviewPage() {
-  const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
   const [date, setDate] = useState<Date>()
   const [showTimeOptions, setShowTimeOptions] = useState<boolean>(false)
@@ -33,10 +32,7 @@ export default function ScheduleInterviewPage() {
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1500))
 
-    toast({
-      title: "Interview scheduled",
-      description: "The interview has been successfully scheduled.",
-    })
+    toast("Interview scheduled successfully")
 
     setIsLoading(false)
   }
@@ -330,4 +326,3 @@ const interviewers = [
     role: "Design Director",
   },
 ]
-
