@@ -23,7 +23,7 @@ import {
   X,
 } from "lucide-react"
 
-export default function ApplicationDetailPage({ params }: { params: { id: string } }) {
+export default function ApplicationDetailPage({ params }: { params: { id: number } }) {
   // In a real app, you would fetch the application data based on the ID
   const application = {
     id: params.id,
@@ -405,7 +405,7 @@ export default function ApplicationDetailPage({ params }: { params: { id: string
               <div className="space-y-2">
                 <h3 className="text-sm font-medium">Application Progress</h3>
                 <div className="h-2 bg-muted rounded-full overflow-hidden">
-                  <div className="h-full bg-primary rounded-full" style={{ width: "50%" }}></div>
+                  <div className="h-full bg-primary rounded-full w-1/2"></div>
                 </div>
                 <p className="text-xs text-muted-foreground">You're halfway through the application process</p>
               </div>
@@ -471,4 +471,3 @@ export default function ApplicationDetailPage({ params }: { params: { id: string
     </div>
   )
 }
-
