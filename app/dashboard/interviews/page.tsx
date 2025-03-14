@@ -7,6 +7,20 @@ import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Calendar, Filter, Search, SlidersHorizontal, UserPlus } from "lucide-react"
 
+interface Interview {
+  id: string;
+  candidate: {
+    name: string;
+    avatar: string;
+  };
+  position: string;
+  date: string;
+  time: string;
+  type: string;
+  interviewer: string;
+  status: string;
+}
+
 export default function InterviewsPage() {
   return (
     <div className="flex-1 space-y-4 p-8 pt-6">
@@ -134,7 +148,7 @@ export default function InterviewsPage() {
   )
 }
 
-function InterviewCard({ interview }) {
+function InterviewCard({ interview }: { interview: Interview }) {
   return (
     <Card>
       <CardHeader className="pb-2">
@@ -303,4 +317,3 @@ const upcomingDays = [
     ],
   },
 ]
-

@@ -1,3 +1,5 @@
+"use client"
+
 import { Calendar } from "@/components/ui/calendar"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -6,6 +8,9 @@ import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Progress } from "@/components/ui/progress"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { format } from "date-fns"
+import { useState } from "react"
 
 import {
   BriefcaseIcon,
@@ -17,6 +22,7 @@ import {
   Users,
   UserCheck,
   Layers,
+  CalendarIcon,
 } from "lucide-react"
 
 import { RecruitmentFunnel } from "@/components/dashboard/recruitment-funnel"
@@ -25,6 +31,8 @@ import { JobMetrics } from "@/components/dashboard/job-metrics"
 import { CandidateTable } from "@/components/dashboard/candidate-table"
 
 export default function DashboardPage() {
+  const [date, setDate] = useState<Date>(new Date())
+  const [open, setOpen] = useState(false); // Add this state to control popover visibility
   return (
     <div className="flex-1 space-y-4 p-8 pt-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -33,17 +41,34 @@ export default function DashboardPage() {
           <p className="text-muted-foreground">Welcome back, Sarah! Here's what's happening today.</p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline">
-            <Calendar Clock className="mr-2 h-4 w-4" />
-            May 24, 2023
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button variant="outline" className="w-[240px] justify-start text-left font-normal">
+            <CalendarIcon className="mr-2 h-4 w-4" />
+            {date ? format(date, "PPP") : "Select date"}
           </Button>
-          <Button asChild>
-            <Link href="/dashboard/jobs/create">
-              <BriefcaseIcon className="mr-2 h-4 w-4" />
-              Post New Job
-            </Link>
-          </Button>
-        </div>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0" align="start">
+          <Calendar
+            mode="single"
+            selected={date}
+            onSelect={(newDate) => {
+              if (newDate) {
+                setDate(newDate);
+                setOpen(false); // Close the popover after selecting a date
+              }
+            }}
+            initialFocus
+          />
+        </PopoverContent>
+      </Popover>
+      <Button asChild>
+        <Link href="/dashboard/jobs/create">
+          <BriefcaseIcon className="mr-2 h-4 w-4" />
+          Post New Job
+        </Link>
+      </Button>
+    </div>
       </div>
 
       {/* Key Metrics Cards */}
@@ -379,4 +404,3 @@ const interviews = [
     time: "3:15 PM - 4:15 PM",
   },
 ]
-

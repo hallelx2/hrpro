@@ -12,10 +12,9 @@ import { Switch } from "@/components/ui/switch"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
 import { Save, Lock, FileText, Mail } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+import { toast } from "sonner"
 
 export default function SettingsPage() {
-  const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
 
   const handleSave = async () => {
@@ -26,10 +25,7 @@ export default function SettingsPage() {
 
     setIsLoading(false)
 
-    toast({
-      title: "Settings saved",
-      description: "Your settings have been updated successfully.",
-    })
+    toast("Settings saved successfully")
   }
 
   return (
@@ -660,4 +656,3 @@ export default function SettingsPage() {
     </div>
   )
 }
-
