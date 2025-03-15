@@ -16,6 +16,8 @@ import {
   Calendar,
   LogOut,
   ChevronDown,
+  PanelLeftClose,
+  PanelLeftOpen,
 } from "lucide-react"
 
 import {
@@ -45,13 +47,16 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Badge } from "@/components/ui/badge"
 import { NotificationButton } from "@/components/notifications/notification-button"
+import { Button } from "@/components/ui/button"
 
 export function DashboardSidebar({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider defaultOpen>
       <div className="flex min-h-screen w-full bg-muted/40 dark:bg-background/80">
-        <MainSidebar />
-        <div className="flex flex-col flex-1">
+        <div className="sidebar-container">
+          <MainSidebar />
+        </div>
+        <div className="content-container flex-1">
           <HeaderNav />
           <main className="flex-1">{children}</main>
         </div>
@@ -62,13 +67,19 @@ export function DashboardSidebar({ children }: { children: React.ReactNode }) {
 
 function MainSidebar() {
   const pathname = usePathname()
+  const { state, isMobile, openMobile } = useSidebar()
+
+  // Determine the sidebar state class
+  const sidebarStateClass = isMobile
+    ? openMobile ? "expanded" : "collapsed"
+    : state;
 
   return (
-    <Sidebar>
+    <Sidebar className={`main-sidebar ${sidebarStateClass}`}>
       <SidebarHeader>
         <div className="flex items-center gap-2 px-4 py-2">
           <Briefcase className="h-6 w-6 text-primary" />
-          <div className="font-bold text-xl">JobHub</div>
+          <div className="sidebar-logo font-bold text-xl">JobHub</div>
         </div>
       </SidebarHeader>
       <SidebarContent>
@@ -208,17 +219,36 @@ function MainSidebar() {
 }
 
 function HeaderNav() {
-  const { toggleSidebar } = useSidebar()
+  const { toggleSidebar, isMobile, openMobile } = useSidebar()
 
   return (
-    <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
-      <SidebarTrigger />
-      <div className="flex-1" />
-
+    <div className="flex items-center justify-between border-b px-4 py-2">
       <div className="flex items-center gap-2">
-        <NotificationButton />
-        <ThemeToggle />
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={toggleSidebar}
+          aria-label="Toggle sidebar"
+        >
+          {isMobile ? (
+            openMobile ? <PanelLeftClose /> : <PanelLeftOpen />
+          ) : (
+            <PanelLeftOpen />
+          )}
+        </Button>
       </div>
+      <div className="flex items-center gap-2">
+        <UserNav />
+      </div>
+    </div>
+  )
+}
+
+function UserNav() {
+  return (
+    <div className="flex items-center gap-2">
+      <NotificationButton />
+      <ThemeToggle />
 
       <DropdownMenu>
         <DropdownMenuTrigger className="flex items-center gap-2 outline-none">
@@ -258,7 +288,6 @@ function HeaderNav() {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-    </header>
+    </div>
   )
 }
-

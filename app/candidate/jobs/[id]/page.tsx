@@ -1,4 +1,7 @@
+"use client"
+
 import Link from "next/link"
+import { useParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -17,10 +20,11 @@ import {
   Share2,
 } from "lucide-react"
 
-export default function JobDetailPage({ params }: { params: { id: string } }) {
+export default function JobDetailPage() {
   // In a real app, you would fetch the job data based on the ID
+  const {id} = useParams();
   const job = {
-    id: params.id,
+    id: id,
     title: "Senior Frontend Developer",
     company: "TechGlobe Inc.",
     companyLogo: "/placeholder.svg?height=50&width=50",
@@ -303,7 +307,7 @@ export default function JobDetailPage({ params }: { params: { id: string } }) {
                 <h3 className="text-sm font-medium">Skills Match</h3>
                 <div className="flex items-center gap-2">
                   <div className="h-2 flex-1 bg-muted rounded-full overflow-hidden">
-                    <div className="h-full bg-green-500 rounded-full" style={{ width: "85%" }}></div>
+                    <div className="h-full bg-green-500 rounded-full w-85"></div>
                   </div>
                   <span className="text-sm font-medium">85%</span>
                 </div>
@@ -314,7 +318,7 @@ export default function JobDetailPage({ params }: { params: { id: string } }) {
                 <h3 className="text-sm font-medium">Experience Match</h3>
                 <div className="flex items-center gap-2">
                   <div className="h-2 flex-1 bg-muted rounded-full overflow-hidden">
-                    <div className="h-full bg-blue-500 rounded-full" style={{ width: "90%" }}></div>
+                    <div className="h-full bg-blue-500 rounded-full w-90"></div>
                   </div>
                   <span className="text-sm font-medium">90%</span>
                 </div>
@@ -325,7 +329,7 @@ export default function JobDetailPage({ params }: { params: { id: string } }) {
                 <h3 className="text-sm font-medium">Competition</h3>
                 <div className="flex items-center gap-2">
                   <div className="h-2 flex-1 bg-muted rounded-full overflow-hidden">
-                    <div className="h-full bg-yellow-500 rounded-full" style={{ width: "65%" }}></div>
+                    <div className="h-full bg-yellow-500 rounded-full w-65"></div>
                   </div>
                   <span className="text-sm font-medium">Medium</span>
                 </div>
@@ -338,4 +342,3 @@ export default function JobDetailPage({ params }: { params: { id: string } }) {
     </div>
   )
 }
-

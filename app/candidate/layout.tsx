@@ -8,4 +8,3 @@ export default function CandidateLayout({
 }) {
   return <CandidateSidebar>{children}</CandidateSidebar>
 }
-

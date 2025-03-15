@@ -1,3 +1,5 @@
+"use client"
+
 import { ArrowLeft, Share2, MapPin, Briefcase, Clock } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -5,13 +7,14 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { JobApplicationForm } from "@/components/job-application-form"
+import { useParams } from "next/navigation"
 
-export default function JobDetailsPage({ params }: { params: { id: string } }) {
-  const jobId = params.id
+export default function JobDetailsPage() {
+  const {id} = useParams();
 
   // Mock job data (replace with actual data fetching)
   const job = {
-    id: jobId,
+    id: id as string,
     title: "Senior Frontend Developer",
     department: "Engineering",
     location: "San Francisco, CA",
@@ -204,9 +207,8 @@ export default function JobDetailsPage({ params }: { params: { id: string } }) {
 
       <div id="apply" className="mt-12 pt-6 border-t">
         <h2 className="text-2xl font-bold tracking-tight mb-6">Apply for this Position</h2>
-        <JobApplicationForm jobId={job.id} jobTitle={job.title} />
+        <JobApplicationForm jobId={String(id)} jobTitle={job.title} />
       </div>
     </div>
   )
 }
-

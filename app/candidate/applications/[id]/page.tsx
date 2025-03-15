@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { useParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -25,16 +26,11 @@ import {
   X,
 } from "lucide-react"
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
-
-export default function ApplicationDetailPage({ params }: PageProps) {
+export default async function ApplicationDetailPage() {
   // In a real app, you would fetch the application data based on the ID
+  const {id} = useParams();
   const application = {
-    id: params.id,
+    id: id,
     jobTitle: "Senior Frontend Developer",
     company: "TechGlobe Inc.",
     companyLogo: "/placeholder.svg?height=50&width=50",
@@ -374,7 +370,7 @@ export default function ApplicationDetailPage({ params }: PageProps) {
                   <p className="text-muted-foreground">{application.jobDescription}</p>
                   <div className="mt-4">
                     <Button variant="outline" asChild>
-                      <Link href={`/candidate/jobs/${params.id}`}>
+                      <Link href={`/candidate/jobs/${id}`}>
                         View Full Job Details <ChevronRight className="ml-1 h-4 w-4" />
                       </Link>
                     </Button>
@@ -413,14 +409,14 @@ export default function ApplicationDetailPage({ params }: PageProps) {
               <div className="space-y-2">
                 <h3 className="text-sm font-medium">Application Progress</h3>
                 <div className="h-2 bg-muted rounded-full overflow-hidden">
-                  <div className="h-full bg-primary rounded-full w-1/2"></div>
+                  <div className="h-full bg-primary rounded-full w-50"></div>
                 </div>
                 <p className="text-xs text-muted-foreground">You're halfway through the application process</p>
               </div>
 
               <div className="pt-2 space-y-2">
                 <Button className="w-full" asChild>
-                  <Link href={`/candidate/applications/${params.id}/prepare`}>
+                  <Link href={`/candidate/applications/${id}/prepare`}>
                     <CheckCircle className="mr-2 h-4 w-4" />
                     Prepare for Interview
                   </Link>

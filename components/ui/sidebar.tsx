@@ -84,13 +84,37 @@ function SidebarProvider({
 
       // This sets the cookie to keep the sidebar state.
       document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`
+
+      // Update CSS variables for responsive layout
+      if (openState) {
+        document.documentElement.style.setProperty('--sidebar-width-current', SIDEBAR_WIDTH)
+        document.documentElement.style.setProperty('--sidebar-margin', '0')
+      } else {
+        document.documentElement.style.setProperty('--sidebar-width-current', SIDEBAR_WIDTH_ICON)
+        document.documentElement.style.setProperty('--sidebar-margin', '0')
+      }
     },
     [setOpenProp, open]
   )
 
+  // Set initial CSS variables based on default state
+  React.useEffect(() => {
+    if (open) {
+      document.documentElement.style.setProperty('--sidebar-width-current', SIDEBAR_WIDTH)
+      document.documentElement.style.setProperty('--sidebar-margin', '0')
+    } else {
+      document.documentElement.style.setProperty('--sidebar-width-current', SIDEBAR_WIDTH_ICON)
+      document.documentElement.style.setProperty('--sidebar-margin', '0')
+    }
+  }, [open])
+
   // Helper to toggle the sidebar.
   const toggleSidebar = React.useCallback(() => {
-    return isMobile ? setOpenMobile((open) => !open) : setOpen((open) => !open)
+    if (isMobile) {
+      setOpenMobile((open) => !open);
+    } else {
+      setOpen((open) => !open);
+    }
   }, [isMobile, setOpen, setOpenMobile])
 
   // Adds a keyboard shortcut to toggle the sidebar.
@@ -164,6 +188,14 @@ function Sidebar({
   collapsible?: "offcanvas" | "icon" | "none"
 }) {
   const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
+
+  // Update CSS variables for mobile
+  React.useEffect(() => {
+    if (isMobile) {
+      document.documentElement.style.setProperty('--sidebar-width-current', '0')
+      document.documentElement.style.setProperty('--sidebar-margin', '0')
+    }
+  }, [isMobile])
 
   if (collapsible === "none") {
     return (
@@ -292,8 +324,7 @@ function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
       title="Toggle Sidebar"
       className={cn(
         "hover:after:bg-sidebar-border absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear group-data-[side=left]:-right-4 group-data-[side=right]:left-0 after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] sm:flex",
-        "in-data-[side=left]:cursor-w-resize in-data-[side=right]:cursor-e-resize",
-        "[[data-side=left][data-state=collapsed]_&]:cursor-e-resize [[data-side=right][data-state=collapsed]_&]:cursor-w-resize",
+        "in-data-[side=left][data-state=collapsed]_&]:cursor-e-resize in-data-[side=right][data-state=collapsed]_&]:cursor-w-resize",
         "hover:group-data-[collapsible=offcanvas]:bg-sidebar group-data-[collapsible=offcanvas]:translate-x-0 group-data-[collapsible=offcanvas]:after:left-full",
         "[[data-side=left][data-collapsible=offcanvas]_&]:-right-2",
         "[[data-side=right][data-collapsible=offcanvas]_&]:-left-2",

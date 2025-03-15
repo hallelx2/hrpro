@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -8,11 +10,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ArrowLeft, Download, Mail, Phone, MapPin, Calendar, Briefcase, GraduationCap, Award } from "lucide-react"
 import { ResumeViewer } from "@/components/applications/resume-viewer"
 import { AIAnalysis } from "@/components/applications/ai-analysis"
+import { useParams } from "next/navigation"
 
-export default function ApplicationDetailPage({ params }: { params: { id: string } }) {
+export default function ApplicationDetailPage() {
   // In a real app, you would fetch the application data based on the ID
+  const {id} = useParams();
   const application = {
-    id: params.id,
+    id: id as string,
     candidate: {
       name: "Olivia Johnson",
       avatar: "/placeholder.svg?height=128&width=128",
@@ -283,4 +287,3 @@ export default function ApplicationDetailPage({ params }: { params: { id: string
     </div>
   )
 }
-

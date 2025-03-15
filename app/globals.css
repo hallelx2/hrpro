@@ -232,3 +232,83 @@
   }
 }
 
+/* Sidebar styles */
+.sidebar-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-sidebar {
+  position: fixed;
+  height: 100vh;
+  background-color: white;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 50;
+  transition: width 0.3s ease, transform 0.3s ease;
+}
+
+.main-sidebar.expanded {
+  width: 16rem; /* 64px */
+}
+
+.main-sidebar.collapsed {
+  width: 3rem; /* 12px */
+}
+
+.sidebar-logo {
+  transition: opacity 0.3s ease;
+}
+
+.main-sidebar.collapsed .sidebar-logo {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+.content-container {
+  flex: 1;
+  transition: margin-left 0.3s ease;
+}
+
+/* Desktop styles */
+@media (min-width: 768px) {
+  .content-container {
+    margin-left: 16rem; /* 64px when sidebar is expanded */
+  }
+
+  .main-sidebar.collapsed + .content-container {
+    margin-left: 3rem; /* 12px when sidebar is collapsed */
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 767px) {
+  .main-sidebar {
+    transform: translateX(-100%);
+  }
+
+  .main-sidebar.expanded {
+    transform: translateX(0);
+  }
+
+  .content-container {
+    margin-left: 0;
+  }
+}
+
+/* Progress bar width classes */
+.w-85 {
+  width: 85%;
+}
+
+.w-90 {
+  width: 90%;
+}
+
+.w-65 {
+  width: 65%;
+}
+
+.w-50 {
+  width: 50%;
+}
