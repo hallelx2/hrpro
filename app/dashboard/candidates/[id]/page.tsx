@@ -42,11 +42,13 @@ import {
 import { toast } from "sonner"
 import { AIAnalysis } from "@/components/applications/ai-analysis"
 import { ResumeViewer } from "@/components/applications/resume-viewer"
+import { useParams } from "next/navigation"
 
-export default function CandidateDetailPage({ params }: { params: { id: string } }) {
+export default function CandidateDetailPage() {
   const [status, setStatus] = useState("Shortlisted")
   const [isLoading, setIsLoading] = useState(false)
   const [isMessageOpen, setIsMessageOpen] = useState(false)
+  const {id} = useParams();
 
   const handleStatusChange = (newStatus: string) => {
     setIsLoading(true)
@@ -74,7 +76,7 @@ export default function CandidateDetailPage({ params }: { params: { id: string }
 
   // Mock candidate data - in a real app, this would come from an API
   const candidate = {
-    id: params.id,
+    id: id,
     name: "Olivia Johnson",
     avatar: "/placeholder.svg?height=128&width=128",
     email: "olivia.johnson@example.com",
